@@ -59,3 +59,7 @@ Face_Attendance_System/
     ```
 4.  **Quit:**
     Press **'q'** on your keyboard (while the webcam window is active) to stop the program.
+
+    ## Support
+
+If you like this project, please ⭐ the repository, it motivates future development!
