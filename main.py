@@ -6,7 +6,11 @@ from datetime import datetime
 
 # from PIL import ImageGrab
 
-path = 'Training_images'
+# Get the folder where this script (main.py) is actually located
+script_dir = os.path.dirname(os.path.abspath(__file__))
+
+# Join that with the folder name to get the correct absolute path
+path = os.path.join(script_dir, 'Training_images')
 images = []
 classNames = []
 myList = os.listdir(path)
@@ -30,18 +34,25 @@ def findEncodings(images):
 
 
 def markAttendance(name):
-    with open('Attendance.csv', 'r+') as f:
+    # Construct the absolute path to the CSV file
+    csv_path = os.path.join(script_dir, 'Attendance.csv')
+    
+    # Check if file exists; if not, create it with headers
+    if not os.path.exists(csv_path):
+        with open(csv_path, 'w') as f:
+            f.write('Name,Time') # Optional header
+
+    with open(csv_path, 'r+') as f:
         myDataList = f.readlines()
-
-
         nameList = []
         for line in myDataList:
             entry = line.split(',')
             nameList.append(entry[0])
-            if name not in nameList:
-                now = datetime.now()
-                dtString = now.strftime('%H:%M:%S')
-                f.writelines(f'\n{name},{dtString}')
+            
+        if name not in nameList:
+            now = datetime.now()
+            dtString = now.strftime('%H:%M:%S')
+            f.writelines(f'\n{name},{dtString}')
 
 #### FOR CAPTURING SCREEN RATHER THAN WEBCAM
 # def captureScreen(bbox=(300,300,690+300,530+300)):
